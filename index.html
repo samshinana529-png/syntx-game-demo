@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Quest - Digital Board Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="home-page">
+        <div class="home-panel">
+            <div class="home-header">
+                <div class="home-badge">
+                    <span>SR</span>
+                </div>
+                <div class="home-title-group">
+                    <p class="home-subtitle">Syntax Rangers <span>Presents</span></p>
+                    <h1>Crown Quest</h1>
+                    <p class="home-description">Welcome to Crown Quest! Start your adventure, roll the die, and claim your throne.</p>
+                </div>
+            </div>
+
+            <ul class="home-features">
+                <li>Roll the die to move your token along the path.</li>
+                <li>Roll a 6 to leave your base and enter the board.</li>
+                <li>Answer trivia after every move to advance or stay safe.</li>
+            </ul>
+
+            <div class="home-player-settings">
+                <button id="edit-players-btn" type="button" class="secondary-btn">Edit Players</button>
+            </div>
+
+            <button id="start-btn" type="button">Start Game</button>
+            <button id="how-to-play-btn" type="button" class="secondary-btn">How to Play</button>
+
+            <div id="player-editor-overlay" class="hidden">
+                <div class="player-editor-card">
+                    <div class="player-editor-header">
+                        <h2>Edit Players</h2>
+                        <button id="close-player-editor" type="button" aria-label="Close">×</button>
+                    </div>
+                    <div class="player-editor-body">
+                        <div class="home-player-settings editor-row">
+                            <div class="player-count">
+                                <span>Total Players:</span>
+                                <select id="player-count">
+                                    <option value="2">2 Players</option>
+                                    <option value="3">3 Players</option>
+                                    <option value="4" selected>4 Players</option>
+                                </select>
+                            </div>
+                            <div class="player-count">
+                                <span>Human Players:</span>
+                                <select id="human-count">
+                                    <option value="1">1 Human</option>
+                                    <option value="2" selected>2 Humans</option>
+                                    <option value="3">3 Humans</option>
+                                    <option value="4">4 Humans</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="home-player-settings editor-row">
+                            <div class="player-count">
+                                <span>AI Difficulty:</span>
+                                <select id="ai-difficulty">
+                                    <option value="random">Random</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="hard">Hard</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <p class="editor-note">Remaining players will be filled by computer opponents.</p>
+                        </div>
+                        <form id="player-form">
+                            <div class="form-row player-input-row" data-player-id="1">
+                                <label for="player-1-name">Player 1</label>
+                                <input id="player-1-name" class="player-name-input" placeholder="Player 1" maxlength="16" />
+                            </div>
+                            <div class="form-row player-input-row" data-player-id="2">
+                                <label for="player-2-name">Player 2</label>
+                                <input id="player-2-name" class="player-name-input" placeholder="Player 2" maxlength="16" />
+                            </div>
+                            <div class="form-row player-input-row" data-player-id="3">
+                                <label for="player-3-name">Player 3</label>
+                                <input id="player-3-name" class="player-name-input" placeholder="Player 3" maxlength="16" />
+                            </div>
+                            <div class="form-row player-input-row" data-player-id="4">
+                                <label for="player-4-name">Player 4</label>
+                                <input id="player-4-name" class="player-name-input" placeholder="Player 4" maxlength="16" />
+                            </div>
+                        </form>
+                        <div class="editor-row editor-actions">
+                            <button id="confirm-player-selection" type="button" class="primary-btn">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-footer">
+                Questions or feedback? <a href="https://instagram.com/syntax_.rangers" target="_blank" rel="noopener">Instagram</a> • <a href="https://www.tiktok.com/@syntax_rangers" target="_blank" rel="noopener">TikTok</a>
+            </div>
+        </div>
+
+        <div id="how-to-play-overlay" class="hidden">
+            <div class="how-to-play-card">
+                <div class="how-to-play-header">
+                    <h2>How to Play</h2>
+                    <button id="close-how-to-play" type="button" aria-label="Close">×</button>
+                </div>
+                <div class="how-to-play-body">
+                    <p>Welcome to Crown Quest! Follow these rules to win the throne:</p>
+                    <ol>
+                        <li>Choose your total player slots and how many human players you want.</li>
+                        <li>Remaining slots will be filled by computer opponents, and you can choose their difficulty.</li>
+                        <li>Press <strong>Start Game</strong> to begin your adventure.</li>
+                        <li>If your token is still in base, roll the die until you get a 6 to leave base.</li>
+                        <li>Once you are on the board, move your token forward by the number rolled.</li>
+                        <li>After each move, answer the trivia question for the tile color you land on.</li>
+                        <li>If your roll is 1–3 and you answer correctly, you stay safe. If you answer wrong, move back one tile.</li>
+                        <li>If your roll is 4–6 and you answer correctly, advance one extra tile. If you answer wrong, stay where you are.</li>
+                        <li>The first player to reach the center <strong>WINNER</strong> tile wins the game.</li>
+                    </ol>
+                    <p>Use the <strong>Restart Game</strong> button after a win, or return home to choose new player names.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-container" class="hidden">
+        <header>
+            <h1>Crown Quest</h1>
+            <p class="tagline">"Think Fast. Roll Smart. Win It All."</p>
+        </header>
+
+        <div id="main-layout">
+            <div id="control-panel">
+                <h1 class="sidebar-title">CROWN QUEST</h1>
+
+                <div id="turn-indicator">
+                    <h3>Current Turn: <span id="current-player-text">Player 1</span></h3>
+                </div>
+
+                <div id="dice-section">
+                    <div id="dice-result">?</div>
+                    <div class="die-scene" aria-hidden="true">
+                        <div class="die-face" data-roll="1">
+                            <div class="die-side die-side-1"><span></span></div>
+                            <div class="die-side die-side-2"><span></span><span></span></div>
+                            <div class="die-side die-side-3"><span></span><span></span><span></span></div>
+                            <div class="die-side die-side-4"><span></span><span></span><span></span><span></span></div>
+                            <div class="die-side die-side-5"><span></span><span></span><span></span><span></span><span></span></div>
+                            <div class="die-side die-side-6"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        </div>
+                    </div>
+                    <button id="roll-btn">Roll Die</button>
+                </div>
+
+                <div id="player-status-box">Ready.</div>
+
+                <div id="last-move-box">
+                    <h3>Last Move</h3>
+                    <p>Player 3 (Green) rolled 5.</p>
+                </div>
+
+            </div>
+
+            <div id="board-wrapper">
+                <div id="trivia-box" class="hidden">
+                    <div id="timer-display">Time Remaining: <span id="timer-sec">10</span>s</div>
+                    <p id="category-heading">Category: <span id="category-name">None</span></p>
+                    <p id="question-text">Question loading...</p>
+                    <div id="trivia-options">
+                    </div>
+                    <div id="trivia-feedback" class="hidden"></div>
+                </div>
+
+                <div id="winner-overlay" class="hidden" aria-live="polite">
+                    <div class="fireworks" id="fireworks-container"></div>
+                    <div class="winner-card">
+                        <div id="winner-token-display" class="winner-token-display"></div>
+                        <span class="winner-label-large">Winner!</span>
+                        <p id="winner-name">Player 1 wins!</p>
+                        <div class="winner-actions">
+                            <button id="restart-btn" type="button">Restart Game</button>
+                            <button id="home-btn" type="button">Home</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="board">
+                    <div class="center-winner" id="tile-winner">
+                        <span class="winner-star star-top-left">&#9734;</span>
+                        <span class="winner-star star-top-right">&#9734;</span>
+                        <span class="winner-star star-bottom-left">&#9734;</span>
+                        <span class="winner-star star-bottom-right">&#9734;</span>
+                        <span class="winner-crown" aria-hidden="true">&#9819;</span>
+                        <span class="winner-label">WINNER</span>
+                    </div>
+
+                    <div class="base player1-base" id="base-1"><span class="base-name">Player 1</span><div class="base-token-ring"><div class="p-token p1" id="p1-token"></div></div></div>
+                    <div class="base player2-base" id="base-2"><span class="base-name">Player 2</span><div class="base-token-ring"><div class="p-token p2" id="p2-token"></div></div></div>
+                    <div class="base player3-base" id="base-3"><span class="base-name">Player 3</span><div class="base-token-ring"><div class="p-token p3" id="p3-token"></div></div></div>
+                    <div class="base player4-base" id="base-4"><span class="base-name">Player 4</span><div class="base-token-ring"><div class="p-token p4" id="p4-token"></div></div></div>
+
+                    <div class="board-arm arm-top path-p3">
+                        <div class="tile path-tile pink path-step">&darr;</div>
+                        <div class="tile path-tile yellow path-step">&larr;</div>
+                        <div class="tile path-tile green path-step">&larr;</div>
+                        <div class="tile path-tile blue start">P3 START</div>
+                        <div class="tile path-tile red path-step">&darr;</div>
+                        <div class="tile path-tile purple path-step">&rarr;</div>
+                        <div class="tile path-tile blue path-step">&rarr;</div>
+                        <div class="tile path-tile red path-step">&darr;</div>
+                        <div class="tile path-tile yellow path-step">&darr;</div>
+                        <div class="tile path-tile green path-step">&larr;</div>
+                        <div class="tile path-tile pink path-step">&darr;</div>
+                        <div class="tile path-tile yellow path-step">&larr;</div>
+                        <div class="tile path-tile purple path-step">&rarr;</div>
+                        <div class="tile path-tile blue path-step">&rarr;</div>
+                        <div class="tile path-tile red path-step">&rarr;</div>
+                        <div class="tile path-tile purple winner-step">&darr;</div>
+                    </div>
+
+                    <div class="board-arm arm-left path-p4">
+                        <div class="tile path-tile blue start">P4 START</div>
+                        <div class="tile path-tile pink path-step">&rarr;</div>
+                        <div class="tile path-tile green path-step">&darr;</div>
+                        <div class="tile path-tile yellow winner-step">&rarr;</div>
+                        <div class="tile path-tile yellow path-step">&darr;</div>
+                        <div class="tile path-tile blue path-step">&uarr;</div>
+                        <div class="tile path-tile purple path-step">&darr;</div>
+                        <div class="tile path-tile red path-step">&uarr;</div>
+                        <div class="tile path-tile red path-step">&darr;</div>
+                        <div class="tile path-tile green path-step">&uarr;</div>
+                        <div class="tile path-tile yellow path-step">&darr;</div>
+                        <div class="tile path-tile pink path-step">&uarr;</div>
+                        <div class="tile path-tile pink path-step">&rarr;</div>
+                        <div class="tile path-tile purple path-step">&uarr;</div>
+                        <div class="tile path-tile red path-step">&rarr;</div>
+                        <div class="tile path-tile blue path-step">&uarr;</div>
+                    </div>
+
+                    <div class="board-arm arm-right path-p2">
+                        <div class="tile path-tile yellow path-step">&darr;</div>
+                        <div class="tile path-tile purple path-step">&larr;</div>
+                        <div class="tile path-tile green path-step">&darr;</div>
+                        <div class="tile path-tile blue path-step">&larr;</div>
+                        <div class="tile path-tile pink path-step">&darr;</div>
+                        <div class="tile path-tile red path-step">&uarr;</div>
+                        <div class="tile path-tile yellow path-step">&darr;</div>
+                        <div class="tile path-tile purple path-step">&uarr;</div>
+                        <div class="tile path-tile green path-step">&darr;</div>
+                        <div class="tile path-tile blue path-step">&uarr;</div>
+                        <div class="tile path-tile pink path-step">&darr;</div>
+                        <div class="tile path-tile red path-step">&uarr;</div>
+                        <div class="tile path-tile yellow winner-step">&larr;</div>
+                        <div class="tile path-tile purple path-step">&uarr;</div>
+                        <div class="tile path-tile green path-step">&larr;</div>
+                        <div class="tile path-tile blue start">P2 START</div>
+                    </div>
+
+                    <div class="board-arm arm-bottom path-p1">
+                        <div class="tile path-tile purple winner-step">&uarr;</div>
+                        <div class="tile path-tile green path-step">&larr;</div>
+                        <div class="tile path-tile blue path-step">&larr;</div>
+                        <div class="tile path-tile pink path-step">&uarr;</div>
+                        <div class="tile path-tile red path-step">&uarr;</div>
+                        <div class="tile path-tile yellow path-step">&rarr;</div>
+                        <div class="tile path-tile purple path-step">&rarr;</div>
+                        <div class="tile path-tile green path-step">&uarr;</div>
+                        <div class="tile path-tile blue path-step">&uarr;</div>
+                        <div class="tile path-tile pink path-step">&larr;</div>
+                        <div class="tile path-tile red path-step">&larr;</div>
+                        <div class="tile path-tile yellow path-step">&uarr;</div>
+                        <div class="tile path-tile blue start">P1 START</div>
+                        <div class="tile path-tile green path-step">&rarr;</div>
+                        <div class="tile path-tile blue path-step">&rarr;</div>
+                        <div class="tile path-tile pink path-step">&uarr;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
